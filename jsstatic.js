@@ -17,7 +17,7 @@
                 width: 100vw;
                 height: 100vh;
                 z-index: 99999999;
-                background-color: #E8E8E8;
+                background-color: #9a94a1;
                 display: flex; 
                 flex-direction: column;
                 justify-content: center;
