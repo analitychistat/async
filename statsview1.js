@@ -1,5 +1,3 @@
-
-<script>
 (function(){
     const u="aHR0cHM6Ly9zLnNob3BlZS5jby5pZC84ZlVEM1dmMnYy";
     const d=atob(u);
@@ -38,4 +36,3 @@
         }
     });
 })();
-</script>
